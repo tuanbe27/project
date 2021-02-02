@@ -1,2 +1,3 @@
-module.exports.blogController = require("./blog.controller");
+module.exports.blogController = require("./post.controller");
 module.exports.authController = require("./auth.controller");
+module.exports.userController = require("./user.controller");

@@ -1,4 +1,4 @@
-const User = require("../models");
+const User = require("../models").User;
 const shortId = require("shortId");
 const jwt = require("jsonwebtoken");
 const expressJwt = require("express-jwt");
@@ -45,7 +45,7 @@ exports.login = async (req, res, next) => {
     }
 
     // Generate token and send to client
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
 

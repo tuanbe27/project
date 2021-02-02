@@ -33,8 +33,9 @@ const userSchema = new Schema(
     hashed_password: {
       type: String,
       required: true,
+      select: false,
     },
-    salt: String,
+    salt: { type: String, select: false },
     about: {
       type: String,
     },
@@ -46,6 +47,8 @@ const userSchema = new Schema(
       data: Buffer,
       contentType: String,
     },
+    posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "posts" }],
+    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "comments" }],
     resetPasswordLink: {
       data: String,
       default: "",
@@ -53,7 +56,9 @@ const userSchema = new Schema(
   },
   { timestamps: true }
 );
-
+userSchema.set("toJSON", {
+  virtuals: true,
+});
 userSchema.methods = {
   authenticate: function (password) {
     return this.encryptPassword(password) === this.hashed_password;
@@ -90,4 +95,4 @@ userSchema
     return this.setPassword;
   });
 
-module.exports = mongoose.model("user", userSchema);
+module.exports = mongoose.model("users", userSchema);
